@@ -10,4 +10,4 @@ from cine.models import Review
 def send_review_task(sender, instance, created, **kwargs):
     if created:
         print('intercepted signal for Sending Review Task to Celery')
-        send_review.apply_async()
+        send_review.delay()
