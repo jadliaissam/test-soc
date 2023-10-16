@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 django-filter = "*"
 celery = {extras = ["redis"], version = "*"}
+gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
