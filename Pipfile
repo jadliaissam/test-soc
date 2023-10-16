@@ -10,6 +10,7 @@ django-filter = "*"
 celery = {extras = ["redis"], version = "*"}
 gunicorn = "*"
 whitenoise = "*"
+drf-yasg = {extras = ["validation"], version = "*"}
 
 [dev-packages]
 
