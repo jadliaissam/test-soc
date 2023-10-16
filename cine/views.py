@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from cine.models import Movie, Actor, Review
-from cine.serializers import MovieSerializer, ReviewSerializer, ActorSerializer
+from cine.serializers import MovieSerializer, ReviewSerializer, ActorSerializer, ShortReviewSerializer
 
 
 # Create your views here.
@@ -14,7 +14,7 @@ class MovieViewSet(ModelViewSet):
     queryset = Movie.objects.all()
 
     # To respect restfull, we should use POST to create a review and GET to get all reviews of a movie.
-    @action(detail=True, methods=['POST', 'GET'], url_path='reviews', serializer_class=ReviewSerializer)
+    @action(detail=True, methods=['POST', 'GET'], url_path='reviews', serializer_class=ShortReviewSerializer)
     def handle_reviews(self, request, pk):
         if request.method == 'GET':
             movie = self.get_object()
@@ -24,9 +24,12 @@ class MovieViewSet(ModelViewSet):
                 'data': ReviewSerializer(reviews, many=True).data
             })
         else:
-            serializer = ReviewSerializer(data=request.data)
+            serializer = ShortReviewSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            review = serializer.save()
+            review = Review.objects.create(
+                grade=serializer.validated_data.get('grade'),
+                movie=self.get_object()
+            )
             return Response({
                 'status': status.HTTP_201_CREATED,
                 'data': ReviewSerializer(review).data

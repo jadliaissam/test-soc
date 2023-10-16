@@ -22,6 +22,15 @@ class ActorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ShortReviewSerializer(serializers.Serializer):
+    grade = serializers.IntegerField(required=True)
+
+    def validate_grade(self, value):
+        if value > 5 or value < 0:
+            raise serializers.ValidationError('Grade must be between 0 and 5')
+        return value
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     grade = serializers.IntegerField(required=True)
 

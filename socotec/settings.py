@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'cine',
     'rest_framework',
     'whitenoise',
+    'drf_yasg',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +123,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
